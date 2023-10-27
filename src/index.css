@@ -1,0 +1,35 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat&family=Play&family=Poppins:wght@300;400;500;600&family=Roboto+Mono:ital@1&family=Roboto:wght@300;400&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.main {
+  overflow-x: hidden;
+}
+
+html {
+  font-family: "Poppins", sans-serif;
+}
+
+button {
+  cursor: pointer;
+}
+
+.delete-btn {
+  background: transparent;
+  border: none;
+  color: rgb(139, 0, 0);
+}
+
+.edit-btn {
+  background: transparent;
+  border: none;
+  color: rgb(1, 1, 93);
+}

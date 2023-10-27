@@ -1,0 +1,35 @@
+.container {
+  width: 100%;
+  height: 100%;
+  background-color: rgb(250, 250, 251);
+  display: flex;
+}
+
+.container .main {
+  width: 100%;
+}
+
+.container .main main {
+  overflow-y: auto;
+  height: calc(100vh - 4rem);
+}
+
+.container .main main .main-section {
+  width: 100%;
+  min-height: calc(100vh - 9rem);
+}
+
+.container .main main .buttom {
+  width: 100%;
+  height: 4rem;
+  background-color: #fff;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.container .main main .buttom p {
+  color: rgba(0, 0, 0, 0.77);
+  font-size: 12px;
+}
