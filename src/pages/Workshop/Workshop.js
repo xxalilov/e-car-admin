@@ -1,30 +1,32 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, {useContext, useEffect, useState, useRef} from "react";
+import mapboxgl from "mapbox-gl";
 import {LoadingButton} from "@mui/lab";
 import {
-    FormControl,
-    FormControlLabel,
-    FormLabel,
-    MenuItem, Radio,
-    RadioGroup,
-    Select,
-    TableCell,
-    TableRow
+    FormControl, FormControlLabel, FormLabel, MenuItem, Radio, RadioGroup, Select, TableCell, TableRow
 } from "@mui/material";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
+import PreviewIcon from "@mui/icons-material/Preview";
 import Table from "../../components/Table/Table";
 import AuthContext from "../../store/auth-context";
 import useRequest from "../../hooks/use-request";
 import Notification from "../../components/Notifications/Notification";
 import Loading from "../../components/Loading/Loading";
 import BorderColorOutlinedIcon from "@mui/icons-material/BorderColorOutlined";
-import mapboxgl from "mapbox-gl";
+import Pagination from "../../components/Pagination/Pagination";
+import "./workshop.css";
 
 mapboxgl.accessToken = "pk.eyJ1IjoieG9sYmVrIiwiYSI6ImNsbzVpZmIxeTBiNGoyaW8zczYyaGc3dDEifQ.denGEsWgU0BqOq2xKuQvcQ";
 
 const Workshop = () => {
+    const [currentPage, setCurrentPage] = useState(1);
+    const [count, setCount] = useState(0);
+    const [allPages, setAllPages] = useState(0);
+    const mapContainer = useRef(null);
+    const map = useRef(null);
     const [createUser, setCreateUser] = useState(false);
     const [updateUser, setUpdateUser] = useState(false);
     const [confirmedValue, setConfirmedValue] = useState("");
+    const [confirmedType, setConfirmedType] = useState("all");
     const [title_uz, setTitleUz] = useState("");
     const [title_ru, setTitleRu] = useState("");
     const [title_eng, setTitleEng] = useState("");
@@ -41,7 +43,6 @@ const Workshop = () => {
     const [longitude, setLongitude] = useState("");
     const [workshops, setWorkshops] = useState([]);
     const [typesOfWorkshops, setTypesOfWorkshops] = useState([]);
-    const [locationInput, setLocationInput] = useState("onInput");
     const [id, setId] = useState(null);
 
     const [onSuccessMsg, setOnSuccessMsg] = useState(null);
@@ -52,43 +53,58 @@ const Workshop = () => {
         setTypeOfWorkshopId(event.target.value);
     };
 
+    const handleChangeType = (event) => {
+        setConfirmedType(event.target.value);
+    };
+
     useEffect(() => {
         getWorkshops.doRequest();
+        getTypesOfWorkshops.doRequest();
         // getMap();
-    }, [confirmedValue]);
+    }, [confirmedValue, currentPage, confirmedType]);
+    useEffect(() => {
+        if (createUser) getMap();
+        if (map.current) {
+            map.current.on('click', (e) => {
+                const {lng, lat} = e.lngLat
+                console.log(longitude, latitude);
+                const marker = new mapboxgl.Marker().setLngLat([longitude, latitude]).addTo(map.current);
+                marker.remove();
+                new mapboxgl.Marker().setLngLat([lng, lat]).addTo(map.current);
+                setLongitude(String(lng));
+                setLatitude(String(lat));
+            })
+        }
+    }, [createUser])
     const getWorkshops = useRequest({
-        url: `/workshop?lang=all`, method: "get", headers: {
+        url: `/workshop${confirmedType !== "all" ? `/${confirmedType}` : ""}?lang=all&pageSize=10&page=${currentPage}`,
+        method: "get",
+        headers: {
             Authorization: `Bearer ${authCtx.token}`,
-        }, onSuccess: (data) => {
+        },
+        onSuccess: (data) => {
+            setCount(data.totalCount);
+            setAllPages(data.totalPages);
+            setCurrentPage(data.page)
             setWorkshops(data.data);
         },
     });
 
     const getTypesOfWorkshops = useRequest({
-        url: `/types-of-workshops?lang=uz`,
-        method: 'get',
-        headers: {
+        url: `/types-of-workshops?lang=uz`, method: 'get', headers: {
             Authorization: `Bearer ${authCtx.token}`,
-        },
-        onSuccess: (data) => {
+        }, onSuccess: (data) => {
             setTypesOfWorkshops(data.data);
         }
     })
 
     const getMap = () => {
-        const map = new mapboxgl.Map({
-            container: 'map-container', // container ID
+        map.current = new mapboxgl.Map({
+            container: mapContainer.current, // container ID
             style: 'mapbox://styles/mapbox/streets-v11', // style URL
             center: [69.251827, 41.307349], // starting position [lng, lat]
             zoom: 12, // starting zoom
         });
-
-        // Add controls, markers, or other customizations here as needed
-
-        map.current.on('move', () => {
-            console.log(map.current.getCenter().lng.toFixed(4));
-            console.log(map.current.getCenter().lat.toFixed(4))
-        })
 
         return () => map.remove();
     }
@@ -112,11 +128,12 @@ const Workshop = () => {
             lat: latitude,
             long: longitude,
         }, onSuccess: (data) => {
+            console.log(data)
             getWorkshops.doRequest();
             setCreateUser(false);
             setUpdateUser(false);
             setOnSuccessMsg("Workshop yaratildi.");
-        },
+        }
     });
 
     const updateWorkshopsRequest = useRequest({
@@ -135,8 +152,8 @@ const Workshop = () => {
             address_ru,
             address_eng,
             typeOfWorkshopId,
-            lat: latitude,
-            long: longitude,
+            lat: String(latitude),
+            long: String(longitude),
         }, onSuccess: (data) => {
             getWorkshops.doRequest();
             setCreateUser(false);
@@ -152,6 +169,17 @@ const Workshop = () => {
                 setTitleUz(type.title_uz);
                 setTitleRu(type.title_ru);
                 setTitleEng(type.title_eng);
+                setDescriptionUz(type.description_uz);
+                setDescriptionEng(type.description_eng);
+                setDescriptionRu(type.description_ru);
+                setAddressUz(type.address_uz);
+                setAddressEng(type.address_eng);
+                setAddressRu(type.address_ru);
+                setWorkingTime(type.workingTime);
+                setPhone(type.phone);
+                setTypeOfWorkshopId(type.typeOfWorkshopId);
+                setLatitude(type.lat);
+                setLongitude(type.long);
             }
         });
         setUpdateUser(true);
@@ -186,6 +214,10 @@ const Workshop = () => {
         }
     };
 
+    const changeCurrentPage = (page) => {
+        setCurrentPage(page);
+    };
+
     return (<React.Fragment>
         {getWorkshops.loading ? <Loading/> : null}
         {addWorkshops.loading ? <Loading/> : null}
@@ -214,13 +246,27 @@ const Workshop = () => {
                     >
                         <button onClick={() => {
                             setCreateUser(true);
-                            getTypesOfWorkshops.doRequest();
                         }}>{"Add Workshop"}</button>
                     </div>
                 </div>
                 {!createUser ? (<>
+                    <div className="sorting-container">
+                        <FormControl sx={{m: 1, minWidth: 120}}>
+                            <Select
+                                value={confirmedType}
+                                onChange={handleChangeType}
+                                displayEmpty
+                                inputProps={{"aria-label": "Without label"}}
+                            >
+                                <MenuItem value={"all"}>All</MenuItem>
+                                {typesOfWorkshops.map(type => (
+                                    <MenuItem key={type.id} value={type.id}>{type.title}</MenuItem>
+                                ))}
+                            </Select>
+                        </FormControl>
+                    </div>
                     <Table
-                        headers={["Title Uz", "Title Eng", "Title Ru", "image", "Edit", "Delete",]}
+                        headers={["Title Uz", "Title Eng", "Title Ru", "Description Uz", "Description Eng", "Description Ru", "Address Uz", "Address Eng", "Address Ru", "Phone", "Working Time", "See On Map", "Edit", "Delete"]}
                     >
                         {workshops.map((n) => (<TableRow
                             key={n.id}
@@ -240,12 +286,37 @@ const Workshop = () => {
                                 {n.title_ru}
                             </TableCell>
                             <TableCell align="left">
-                                <img
-                                    // crossOrigin="anonymous"
-                                    alt={"image"}
-                                    src={`http://localhost:3000/${n.photo}`}
-                                    style={{width: "100px"}}
-                                />
+                                {n.description_uz}
+                            </TableCell>
+                            <TableCell align="left">
+                                {n.description_eng}
+                            </TableCell>
+                            <TableCell align="left">
+                                {n.description_ru}
+                            </TableCell>
+                            <TableCell align="left">
+                                {n.address_uz}
+                            </TableCell>
+                            <TableCell align="left">
+                                {n.address_eng}
+                            </TableCell>
+                            <TableCell align="left">
+                                {n.address_ru}
+                            </TableCell>
+                            <TableCell align="left">
+                                {n.phone}
+                            </TableCell>
+                            <TableCell align="left">
+                                {n.workingTime}
+                            </TableCell>
+                            <TableCell align="left">
+                                <a
+                                    href={`
+                      https://yandex.com/maps/?ll=${n.long},${n.lat}&z=14&text=${n.lat},${n.long}`}
+                                    target="_blank"
+                                >
+                                    <PreviewIcon/>
+                                </a>
                             </TableCell>
                             <TableCell
                                 align="left"
@@ -264,6 +335,15 @@ const Workshop = () => {
                             </TableCell>
                         </TableRow>))}
                     </Table>
+                    <div className="pagination">
+                        <Pagination
+                            className="pagination-bar"
+                            currentPage={currentPage}
+                            totalCount={count}
+                            pageSize={allPages}
+                            onPageChange={(page) => changeCurrentPage(page)}
+                        />
+                    </div>
                 </>) : (<div className="right-section-details">
                     <form onSubmit={onSubmitWorkshopsData}>
                         <div className="detail">
@@ -334,7 +414,7 @@ const Workshop = () => {
                             <input
                                 type={"text"}
                                 value={workingTime}
-                                onChange={(e) => setDescriptionUz(e.target.value)}
+                                onChange={(e) => setWorkingTime(e.target.value)}
                                 required={true}
                             />
                         </div>
@@ -366,17 +446,6 @@ const Workshop = () => {
                             />
                         </div>
                         <div className={"detail"}>
-                            <label>Select From Map</label>
-                            <input
-                                type={"button"}
-                                value={title_ru}
-                                onClick={() => {
-                                    getMap()
-                                }}
-                                required={true}
-                            />
-                        </div>
-                        <div className={"detail"}>
                             <label>Select Type</label>
                             <div className="sorting-container">
                                 <FormControl sx={{m: 1, minWidth: 120}}>
@@ -387,46 +456,25 @@ const Workshop = () => {
                                         inputProps={{"aria-label": "Without label"}}
                                     >
                                         {typesOfWorkshops.map(type => (
-                                            <MenuItem value={type.id}>{type.title}</MenuItem>
-                                        ))}
+                                            <MenuItem value={type.id}>{type.title}</MenuItem>))}
                                     </Select>
                                 </FormControl>
                             </div>
                         </div>
                         <div className={"detail"}>
-                            <FormControl>
-                                <FormLabel id="demo-radio-buttons-group-label">Location</FormLabel>
-                                <RadioGroup
-                                    aria-labelledby="demo-radio-buttons-group-label"
-                                    defaultValue={`${locationInput}`}
-                                    name="radio-buttons-group"
-                                >
-                                    <FormControlLabel value="onInput" control={<Radio/>} label="Input"
-                                                      onChange={() => setLocationInput("onInput")}/>
-                                    <FormControlLabel value="onMap" control={<Radio/>} label="Select From Map"
-                                                      onChange={() => {
-                                                          setLocationInput("onMap");
-                                                          getMap();
-                                                      }}/>
-                                </RadioGroup>
-                            </FormControl>
+                            <div ref={mapContainer} className={"style1"}/>
                         </div>
-                        {locationInput === "onInput" ? <>
-                            <div className={"detail"}>
-                                <label>
-                                    Latitude
-                                </label>
-                                <input type={"text"} value={latitude} onChange={(e) => setLatitude(e.target.value)}/>
-                            </div>
-                            <div className={"detail"}>
-                                <label>
-                                    Longitude
-                                </label>
-                                <input type={"text"} value={longitude} onChange={(e) => setLongitude(e.target.value)}/>
-                            </div>
-                        </> : null}
                         <div className={"detail"}>
-                            <div id={"map-container"} style={{width: '100%', height: '400px'}}/>
+                            <label>
+                                Latitude
+                            </label>
+                            <input type={"text"} value={latitude} onChange={(e) => setLatitude(e.target.value)}/>
+                        </div>
+                        <div className={"detail"}>
+                            <label>
+                                Longitude
+                            </label>
+                            <input type={"text"} value={longitude} onChange={(e) => setLongitude(e.target.value)}/>
                         </div>
                         <div style={{margin: "20px 0"}}>
                             <LoadingButton

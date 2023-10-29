@@ -6,7 +6,6 @@ import Login from "./pages/Login/Login";
 
 function App() {
   const authCtx = useContext(AuthContext);
-  console.log('HELLO')
   return (
     <React.Fragment>
       {authCtx.isLoggedIn ? <Main token={authCtx.token} /> : <Login />}

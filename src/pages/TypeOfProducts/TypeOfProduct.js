@@ -157,7 +157,7 @@ const TypeOfProduct = () => {
                                 <img
                                     // crossOrigin="anonymous"
                                     alt={"image"}
-                                    src={`https://user-stat.uz/${n.photo}`}
+                                    src={`http://localhost:3000/${n.photo}`}
                                     style={{width: "100px"}}
                                 />
                             </TableCell>
