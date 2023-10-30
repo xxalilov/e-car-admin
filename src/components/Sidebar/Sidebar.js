@@ -76,6 +76,20 @@ const Sidebar = (props) => {
                                 Workshops
                             </NavLink>
                         </li>
+                        <li>
+                            <NavLink
+                                className={({isActive}) =>
+                                    isActive ? "link active" : "link"
+                                }
+                                to={"/advertisings"}
+                                onClick={onCloseSideBar}
+                            >
+                                <ChecklistOutlinedIcon style={{paddingRight: "10px"}}/>
+                                Advertisings
+                            </NavLink>
+                        </li>
+
+
                         {props.role === "superadmin" && (
                             <li>
                                 <NavLink

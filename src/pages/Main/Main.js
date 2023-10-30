@@ -12,6 +12,8 @@ import Loading from "../../components/Loading/Loading";
 import TypeOfProduct from "../TypeOfProducts/TypeOfProduct";
 import TypeOfWorkshop from "../TypeOfWorkshops/TypeOfWorkshop";
 import Workshop from "../Workshop/Workshop";
+import News from "../News/News";
+import Advertising from "../Advertising/Advertising";
 
 const Main = () => {
   const [role, setRole] = useState(null);
@@ -40,6 +42,8 @@ const Main = () => {
           <Route path="/type-of-products" element={<TypeOfProduct />} />
           <Route path="/type-of-workshops" element={<TypeOfWorkshop />} />
           <Route path="/workshops" element={<Workshop />} />
+          <Route path="/news" element={<News />} />
+          <Route path="/advertisings" element={<Advertising />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
