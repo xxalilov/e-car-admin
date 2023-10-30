@@ -173,8 +173,8 @@ const News = () => {
                                         <TableCell align="left">{n.link}</TableCell>
                                         <TableCell align="left">
                                             <img
-                                                // crossorigin="anonymous"
-                                                src={`http://localhost:3000/${n.image}`}
+                                                crossorigin="anonymous"
+                                                src={`https://user-stat.uz/${n.image}`}
                                                 style={{width: "100px"}}
                                             />
                                         </TableCell>

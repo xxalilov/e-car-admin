@@ -14,6 +14,8 @@ import TypeOfWorkshop from "../TypeOfWorkshops/TypeOfWorkshop";
 import Workshop from "../Workshop/Workshop";
 import News from "../News/News";
 import Advertising from "../Advertising/Advertising";
+import Stations from "../Stations/Stations";
+import Products from "../Products/Products";
 
 const Main = () => {
   const [role, setRole] = useState(null);
@@ -44,8 +46,10 @@ const Main = () => {
           <Route path="/workshops" element={<Workshop />} />
           <Route path="/news" element={<News />} />
           <Route path="/advertisings" element={<Advertising />} />
+          <Route path="/stations" element={<Stations />} />
           <Route path="/profile" element={<Profile />} />
-          <Route path="*" element={<Navigate to="/" />} />
+          <Route path="/products" element={<Products />} />
+          <Route path="*" element={<Navigate to="/type-of-products" />} />
         </Routes>
       </Layout>
     </React.Fragment>

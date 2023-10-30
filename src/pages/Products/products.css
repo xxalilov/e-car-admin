@@ -1,0 +1,104 @@
+.style1 {
+    width: 100%;
+    height: 400px;
+}
+
+.style2 {
+    width: 100%;
+    height: 0px;
+}
+
+.profile-container {
+    width: 98%;
+    margin: 20px auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.profile-container .right-section {
+    width: 100%;
+    background-color: #fff;
+    box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.2);
+    border-radius: 6px;
+    margin: 15px;
+    padding: 20px;
+    overflow: hidden;
+}
+
+.profile-container .right-section .right-section-header {
+    width: 100%;
+    height: 3rem;
+    border-bottom: 1px solid rgb(233, 235, 236);
+    display: flex;
+    align-items: center;
+}
+
+.profile-container .right-section .right-section-header .right-section-control {
+    padding: 0 20px;
+    height: 3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.profile-container .right-section .right-section-header .active {
+    border-bottom: 1px solid rgb(62, 147, 251);
+}
+
+.profile-container
+.right-section
+.right-section-header
+.right-section-control
+button {
+    background: transparent;
+    outline: none;
+    border: none;
+    font-size: 13px;
+    font-weight: 600;
+    color: rgb(62, 147, 251);
+}
+
+.profile-container .right-section .right-section-details {
+    padding: 0 30px;
+}
+
+.profile-container .right-section .right-section-details form {
+    width: 100%;
+}
+
+.profile-container .right-section .right-section-details form .detail {
+    display: flex;
+    flex-direction: column;
+    padding-top: 20px;
+    width: 500px;
+}
+
+.profile-container .right-section .right-section-details form .detail label {
+    color: rgb(87, 98, 101);
+    font-weight: 600;
+    font-size: 12px;
+}
+
+.profile-container .right-section .right-section-details form .detail input {
+    height: 2rem;
+    padding-left: 10px;
+    border: 1px solid rgb(230, 235, 241);
+    margin-top: 5px;
+    color: rgb(0, 0, 0);
+    border-radius: 4px;
+    outline: none;
+}
+
+@media screen and (max-width: 1024px) {
+    .profile-container {
+        width: 95%;
+    }
+    .profile-container .right-section {
+        margin: 10px;
+        padding: 5px;
+    }
+    .profile-container .right-section .right-section-details form .detail {
+        width: 100%;
+    }
+}

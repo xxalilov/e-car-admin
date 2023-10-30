@@ -1,9 +1,4 @@
 import {NavLink} from "react-router-dom";
-import ChecklistOutlinedIcon from "@mui/icons-material/ChecklistOutlined";
-import GroupIcon from "@mui/icons-material/Group";
-import ArticleIcon from "@mui/icons-material/Article";
-import AddCommentIcon from "@mui/icons-material/AddComment";
-import Person2Icon from "@mui/icons-material/Person2";
 import {useTranslation} from "react-i18next";
 import React from "react";
 import "./sidebar.css";
@@ -33,22 +28,9 @@ const Sidebar = (props) => {
                                 className={({isActive}) =>
                                     isActive ? "link active" : "link"
                                 }
-                                to={"/"}
-                                onClick={onCloseSideBar}
-                            >
-                                <ChecklistOutlinedIcon style={{paddingRight: "10px"}}/>
-                                {t("roadInfos")}
-                            </NavLink>
-                        </li>
-                        <li>
-                            <NavLink
-                                className={({isActive}) =>
-                                    isActive ? "link active" : "link"
-                                }
                                 to={"/type-of-products"}
                                 onClick={onCloseSideBar}
                             >
-                                <ChecklistOutlinedIcon style={{paddingRight: "10px"}}/>
                                 Type of products
                             </NavLink>
                         </li>
@@ -60,7 +42,6 @@ const Sidebar = (props) => {
                                 to={"/type-of-workshops"}
                                 onClick={onCloseSideBar}
                             >
-                                <ChecklistOutlinedIcon style={{paddingRight: "10px"}}/>
                                 Type of Workshops
                             </NavLink>
                         </li>
@@ -72,7 +53,6 @@ const Sidebar = (props) => {
                                 to={"/workshops"}
                                 onClick={onCloseSideBar}
                             >
-                                <ChecklistOutlinedIcon style={{paddingRight: "10px"}}/>
                                 Workshops
                             </NavLink>
                         </li>
@@ -84,8 +64,29 @@ const Sidebar = (props) => {
                                 to={"/advertisings"}
                                 onClick={onCloseSideBar}
                             >
-                                <ChecklistOutlinedIcon style={{paddingRight: "10px"}}/>
                                 Advertisings
+                            </NavLink>
+                        </li>
+                        <li>
+                            <NavLink
+                                className={({isActive}) =>
+                                    isActive ? "link active" : "link"
+                                }
+                                to={"/stations"}
+                                onClick={onCloseSideBar}
+                            >
+                                Stations
+                            </NavLink>
+                        </li>
+                        <li>
+                            <NavLink
+                                className={({isActive}) =>
+                                    isActive ? "link active" : "link"
+                                }
+                                to={"/products"}
+                                onClick={onCloseSideBar}
+                            >
+                                Products
                             </NavLink>
                         </li>
 
@@ -99,53 +100,36 @@ const Sidebar = (props) => {
                                     to={"/news"}
                                     onClick={onCloseSideBar}
                                 >
-                                    <ArticleIcon style={{paddingRight: "10px"}}/>
-                                    {/* {t("usersList")} */}
                                     News
                                 </NavLink>
                             </li>
                         )}
-                        {props.role === "superadmin" && (
-                            <li>
-                                <NavLink
-                                    className={({isActive}) =>
-                                        isActive ? "link active" : "link"
-                                    }
-                                    to={"/feedback-status"}
-                                    onClick={onCloseSideBar}
-                                >
-                                    <AddCommentIcon style={{paddingRight: "10px"}}/>
-                                    {/* {t("usersList")} */}
-                                    Feedback Status
-                                </NavLink>
-                            </li>
-                        )}
-                        {props.role === "superadmin" && (
-                            <li>
-                                <NavLink
-                                    className={({isActive}) =>
-                                        isActive ? "link active" : "link"
-                                    }
-                                    to={"/users"}
-                                    onClick={onCloseSideBar}
-                                >
-                                    <GroupIcon style={{paddingRight: "10px"}}/>
-                                    {t("usersList")}
-                                </NavLink>
-                            </li>
-                        )}
-                        <li>
-                            <NavLink
-                                className={({isActive}) =>
-                                    isActive ? "link active" : "link"
-                                }
-                                to={"/profile"}
-                                onClick={onCloseSideBar}
-                            >
-                                <Person2Icon style={{paddingRight: "10px"}}/>
-                                {t("prof")}
-                            </NavLink>
-                        </li>
+                        {/*{props.role === "superadmin" && (*/}
+                        {/*    <li>*/}
+                        {/*        <NavLink*/}
+                        {/*            className={({isActive}) =>*/}
+                        {/*                isActive ? "link active" : "link"*/}
+                        {/*            }*/}
+                        {/*            to={"/users"}*/}
+                        {/*            onClick={onCloseSideBar}*/}
+                        {/*        >*/}
+                        {/*            <GroupIcon style={{paddingRight: "10px"}}/>*/}
+                        {/*            {t("usersList")}*/}
+                        {/*        </NavLink>*/}
+                        {/*    </li>*/}
+                        {/*)}*/}
+                        {/*<li>*/}
+                        {/*    <NavLink*/}
+                        {/*        className={({isActive}) =>*/}
+                        {/*            isActive ? "link active" : "link"*/}
+                        {/*        }*/}
+                        {/*        to={"/profile"}*/}
+                        {/*        onClick={onCloseSideBar}*/}
+                        {/*    >*/}
+                        {/*        <Person2Icon style={{paddingRight: "10px"}}/>*/}
+                        {/*        {t("prof")}*/}
+                        {/*    </NavLink>*/}
+                        {/*</li>*/}
                     </ul>
                 </div>
             </div>

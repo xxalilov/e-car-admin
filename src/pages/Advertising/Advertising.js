@@ -13,7 +13,7 @@ import AuthContext from "../../store/auth-context";
 import useRequest from "../../hooks/use-request";
 import Loading from "../../components/Loading/Loading";
 
-const advertisings = () => {
+const Advertisings = () => {
     const [createUser, setCreateUser] = useState(false);
     const [updateUser, setUpdateUser] = useState(false);
     const [link, setLink] = useState("");
@@ -139,8 +139,8 @@ const advertisings = () => {
                                         <TableCell align="left">{n.link}</TableCell>
                                         <TableCell align="left">
                                             <img
-                                                // crossorigin="anonymous"
-                                                src={`http://localhost:3000/${n.photo}`}
+                                                crossorigin="anonymous"
+                                                src={`https://user-stat.uz/${n.photo}`}
                                                 style={{width: "100px"}}
                                             />
                                         </TableCell>
@@ -192,4 +192,4 @@ const advertisings = () => {
     );
 };
 
-export default advertisings;
+export default Advertisings;
