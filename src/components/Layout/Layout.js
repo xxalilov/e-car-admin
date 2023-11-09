@@ -27,10 +27,6 @@ const Layout = (props) => {
         <main>
           <div className="main-section">{props.children}</div>
           <div className="buttom">
-            <p>
-              Produced by
-              <a> Promo Technology Group</a>
-            </p>
           </div>
         </main>
       </div>

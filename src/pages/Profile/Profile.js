@@ -33,7 +33,7 @@ const Profile = () => {
       Authorization: `Bearer ${authCtx.token}`,
     },
     onSuccess: (data) => {
-      setName(data.data.name);
+      setName(data.data.fullname);
       setEmail(data.data.email);
       setProvince(data.data.province);
       setId(data.data.id);
@@ -42,19 +42,19 @@ const Profile = () => {
   });
 
   const updateUserDetails = useRequest({
-    url: `/users/${id}`,
+    url: `/admin/email`,
     method: "put",
     headers: {
       Authorization: `Bearer ${authCtx.token}`,
     },
-    body: { name, email, province },
+    body: { fullname: name, email: email },
     onSuccess: (data) => {
       setOnSuccessMsg("Foydalanuvchi ma'lumotlari o'zgartirildi");
     },
   });
 
   const updateUserPassword = useRequest({
-    url: `/users/${id}`,
+    url: `/admin/password`,
     method: "put",
     headers: {
       Authorization: `Bearer ${authCtx.token}`,
@@ -62,7 +62,7 @@ const Profile = () => {
     body: {
       currentPassword,
       password,
-      reapetPassword,
+      reapetPassword
     },
     onSuccess: (data) => {
       setCurrentPassword("");
@@ -81,7 +81,7 @@ const Profile = () => {
   const onSubmitChangePassword = async (e) => {
     e.preventDefault();
     setOnSuccessMsg(null);
-    await updateUserPassword.doRequest();
+      await updateUserPassword.doRequest();
   };
 
   return (

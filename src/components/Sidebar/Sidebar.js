@@ -83,6 +83,17 @@ const Sidebar = (props) => {
                                 className={({isActive}) =>
                                     isActive ? "link active" : "link"
                                 }
+                                to={"/instructions"}
+                                onClick={onCloseSideBar}
+                            >
+                                Instructions
+                            </NavLink>
+                        </li>
+                        <li>
+                            <NavLink
+                                className={({isActive}) =>
+                                    isActive ? "link active" : "link"
+                                }
                                 to={"/products"}
                                 onClick={onCloseSideBar}
                             >
@@ -104,32 +115,30 @@ const Sidebar = (props) => {
                                 </NavLink>
                             </li>
                         )}
-                        {/*{props.role === "superadmin" && (*/}
-                        {/*    <li>*/}
-                        {/*        <NavLink*/}
-                        {/*            className={({isActive}) =>*/}
-                        {/*                isActive ? "link active" : "link"*/}
-                        {/*            }*/}
-                        {/*            to={"/users"}*/}
-                        {/*            onClick={onCloseSideBar}*/}
-                        {/*        >*/}
-                        {/*            <GroupIcon style={{paddingRight: "10px"}}/>*/}
-                        {/*            {t("usersList")}*/}
-                        {/*        </NavLink>*/}
-                        {/*    </li>*/}
-                        {/*)}*/}
-                        {/*<li>*/}
-                        {/*    <NavLink*/}
-                        {/*        className={({isActive}) =>*/}
-                        {/*            isActive ? "link active" : "link"*/}
-                        {/*        }*/}
-                        {/*        to={"/profile"}*/}
-                        {/*        onClick={onCloseSideBar}*/}
-                        {/*    >*/}
-                        {/*        <Person2Icon style={{paddingRight: "10px"}}/>*/}
-                        {/*        {t("prof")}*/}
-                        {/*    </NavLink>*/}
-                        {/*</li>*/}
+                        {props.role === "superadmin" && (
+                            <li>
+                                <NavLink
+                                    className={({isActive}) =>
+                                        isActive ? "link active" : "link"
+                                    }
+                                    to={"/users"}
+                                    onClick={onCloseSideBar}
+                                >
+                                    Users List
+                                </NavLink>
+                            </li>
+                        )}
+                        <li>
+                            <NavLink
+                                className={({isActive}) =>
+                                    isActive ? "link active" : "link"
+                                }
+                                to={"/profile"}
+                                onClick={onCloseSideBar}
+                            >
+                               Profile
+                            </NavLink>
+                        </li>
                     </ul>
                 </div>
             </div>
