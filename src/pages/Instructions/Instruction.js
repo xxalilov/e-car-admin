@@ -14,6 +14,302 @@ import BorderColorOutlinedIcon from "@mui/icons-material/BorderColorOutlined";
 import Pagination from "../../components/Pagination/Pagination";
 
 
+const  models = [
+    {
+        "id": 142,
+        "car_brand": 12,
+        "name": "Menlo",
+        "image": null
+    },
+    {
+        "id": 141,
+        "car_brand": 12,
+        "name": "Volt",
+        "image": null
+    },
+    {
+        "id": 140,
+        "car_brand": 12,
+        "name": "Van",
+        "image": null
+    },
+    {
+        "id": 139,
+        "car_brand": 12,
+        "name": "Traverse",
+        "image": null
+    },
+    {
+        "id": 138,
+        "car_brand": 12,
+        "name": "TrailBlazer",
+        "image": null
+    },
+    {
+        "id": 137,
+        "car_brand": 12,
+        "name": "Tracker",
+        "image": {
+            "id": 89204,
+            "name": "Tracker",
+            "file": "https://cdn.road24.uz/media/file/image/2021-08/fa34692d-3173-4a21-b0f8-c2b201a6a3b6.png"
+        }
+    },
+    {
+        "id": 136,
+        "car_brand": 12,
+        "name": "Tavera",
+        "image": null
+    },
+    {
+        "id": 135,
+        "car_brand": 12,
+        "name": "Tahoe",
+        "image": null
+    },
+    {
+        "id": 134,
+        "car_brand": 12,
+        "name": "Tacuma",
+        "image": null
+    },
+    {
+        "id": 133,
+        "car_brand": 12,
+        "name": "Spark",
+        "image": {
+            "id": 89203,
+            "name": "Spark",
+            "file": "https://cdn.road24.uz/media/file/image/2021-08/541ce1cd-1a76-46bf-bcf9-ddf6a0376e49.png"
+        }
+    },
+    {
+        "id": 132,
+        "car_brand": 12,
+        "name": "Orlando",
+        "image": null
+    },
+    {
+        "id": 131,
+        "car_brand": 12,
+        "name": "Optra",
+        "image": null
+    },
+    {
+        "id": 130,
+        "car_brand": 12,
+        "name": "Niva",
+        "image": null
+    },
+    {
+        "id": 129,
+        "car_brand": 12,
+        "name": "Nexia 3",
+        "image": {
+            "id": 89202,
+            "name": "Nexia 3",
+            "file": "https://cdn.road24.uz/media/file/image/2021-08/03691d1a-83f5-4994-8b0d-23cce5f6e952.png"
+        }
+    },
+    {
+        "id": 128,
+        "car_brand": 12,
+        "name": "Nexia 2",
+        "image": {
+            "id": 89201,
+            "name": "Nexia 2",
+            "file": "https://cdn.road24.uz/media/file/image/2021-08/c5263e3f-e2ed-4cd0-8505-ce28986666a9.png"
+        }
+    },
+    {
+        "id": 127,
+        "car_brand": 12,
+        "name": "Nexia",
+        "image": {
+            "id": 89200,
+            "name": "Nexia",
+            "file": "https://cdn.road24.uz/media/file/image/2021-08/11ec508f-e0bf-42b1-a20f-c11105677d76.png"
+        }
+    },
+    {
+        "id": 126,
+        "car_brand": 12,
+        "name": "Matiz Best",
+        "image": null
+    },
+    {
+        "id": 125,
+        "car_brand": 12,
+        "name": "Matiz",
+        "image": {
+            "id": 89199,
+            "name": "Matiz",
+            "file": "https://cdn.road24.uz/media/file/image/2021-08/3b114912-0ccc-45d3-8da2-55836dc57b37.png"
+        }
+    },
+    {
+        "id": 124,
+        "car_brand": 12,
+        "name": "Malibu 2",
+        "image": {
+            "id": 89198,
+            "name": "Malibu 2",
+            "file": "https://cdn.road24.uz/media/file/image/2021-08/70128e28-af36-42c5-b963-37fca7b7de98.png"
+        }
+    },
+    {
+        "id": 123,
+        "car_brand": 12,
+        "name": "Malibu",
+        "image": {
+            "id": 89197,
+            "name": "Malibu",
+            "file": "https://cdn.road24.uz/media/file/image/2021-08/dfab245f-b318-4b8f-964d-a3be129d8578.png"
+        }
+    },
+    {
+        "id": 122,
+        "car_brand": 12,
+        "name": "Lumina",
+        "image": null
+    },
+    {
+        "id": 121,
+        "car_brand": 12,
+        "name": "Lanos",
+        "image": null
+    },
+    {
+        "id": 120,
+        "car_brand": 12,
+        "name": "Gentra",
+        "image": {
+            "id": 89196,
+            "name": "Gentra",
+            "file": "https://cdn.road24.uz/media/file/image/2021-08/6a838ee0-cf1d-4a27-859b-d25ae0ff2aa1.png"
+        }
+    },
+    {
+        "id": 119,
+        "car_brand": 12,
+        "name": "Lacetti",
+        "image": {
+            "id": 89195,
+            "name": "Lacetti",
+            "file": "https://cdn.road24.uz/media/file/image/2021-08/89b2449b-0720-4569-b7d1-6eb413ed1119.png"
+        }
+    },
+    {
+        "id": 118,
+        "car_brand": 12,
+        "name": "Labo",
+        "image": null
+    },
+    {
+        "id": 117,
+        "car_brand": 12,
+        "name": "Impala",
+        "image": null
+    },
+    {
+        "id": 116,
+        "car_brand": 12,
+        "name": "Equinox",
+        "image": null
+    },
+    {
+        "id": 115,
+        "car_brand": 12,
+        "name": "Epica",
+        "image": null
+    },
+    {
+        "id": 114,
+        "car_brand": 12,
+        "name": "Damas",
+        "image": {
+            "id": 89194,
+            "name": "Damas",
+            "file": "https://cdn.road24.uz/media/file/image/2021-08/f0f109c8-4840-42e3-adf6-28566b76947b.png"
+        }
+    },
+    {
+        "id": 113,
+        "car_brand": 12,
+        "name": "Cruze",
+        "image": null
+    },
+    {
+        "id": 112,
+        "car_brand": 12,
+        "name": "Corsica",
+        "image": null
+    },
+    {
+        "id": 111,
+        "car_brand": 12,
+        "name": "Cobalt",
+        "image": {
+            "id": 89193,
+            "name": "Cobalt",
+            "file": "https://cdn.road24.uz/media/file/image/2021-08/125a7e7f-dae6-4c83-a508-fca331db8204.png"
+        }
+    },
+    {
+        "id": 110,
+        "car_brand": 12,
+        "name": "Celta",
+        "image": null
+    },
+    {
+        "id": 109,
+        "car_brand": 12,
+        "name": "Cavalier",
+        "image": null
+    },
+    {
+        "id": 108,
+        "car_brand": 12,
+        "name": "Captiva",
+        "image": {
+            "id": 89192,
+            "name": "Captiva",
+            "file": "https://cdn.road24.uz/media/file/image/2021-08/6dfed397-1140-45d6-b0b4-b371d63697ad.png"
+        }
+    },
+    {
+        "id": 107,
+        "car_brand": 12,
+        "name": "Caprice",
+        "image": null
+    },
+    {
+        "id": 106,
+        "car_brand": 12,
+        "name": "Camaro",
+        "image": null
+    },
+    {
+        "id": 105,
+        "car_brand": 12,
+        "name": "Aveo",
+        "image": null
+    },
+    {
+        "id": 104,
+        "car_brand": 12,
+        "name": "Astro",
+        "image": null
+    },
+    {
+        "id": 103,
+        "car_brand": 12,
+        "name": "Alero",
+        "image": null
+    }
+]
+
+
 const Instructions = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [count, setCount] = useState(0);
@@ -31,26 +327,23 @@ const Instructions = () => {
     const [link, setLink] = useState("");
     const [type, setType] = useState("");
     const [typeId, setTypeId] = useState("");
-    const [typeOfInstructionsId, setTypeOfInstructionsId] = useState("");
+    const [photo, setPhoto] = useState("");
     const [Instructions, setInstructions] = useState([]);
-    const [typesOfInstructions, setTypesOfInstructions] = useState([]);
     const [id, setId] = useState(null);
 
     const [onSuccessMsg, setOnSuccessMsg] = useState(null);
     const authCtx = useContext(AuthContext);
 
+    const instructuinsData = new FormData();
+
     const handleChangeSorting = (event) => {
         setConfirmedValue(event.target.value);
-        setTypeOfInstructionsId(event.target.value);
-    };
-
-    const handleChangeType = (event) => {
-        setConfirmedType(event.target.value);
+        setTypeId(event.target.value);
     };
 
     useEffect(() => {
         getInstructions.doRequest();
-    }, [confirmedValue, currentPage, confirmedType]);
+    }, [currentPage]);
     const getInstructions = useRequest({
         url: `/instruction?pageSize=10&page=${currentPage}`,
         method: "get",
@@ -58,7 +351,6 @@ const Instructions = () => {
             Authorization: `Bearer ${authCtx.token}`,
         },
         onSuccess: (data) => {
-            console.log(data)
             setCount(data.totalCount);
             setAllPages(data.totalPages);
             setCurrentPage(data.page)
@@ -66,28 +358,10 @@ const Instructions = () => {
         },
     });
 
-    const getTypesOfInstructions = useRequest({
-        url: `/types-of-Instructions?lang=uz`, method: 'get', headers: {
-            Authorization: `Bearer ${authCtx.token}`,
-        }, onSuccess: (data) => {
-            setTypesOfInstructions(data.data);
-        }
-    })
-
     const addInstructions = useRequest({
-        url: `/Instructions`, method: "post", headers: {
+        url: `/instruction`, method: "post", headers: {
             Authorization: `Bearer ${authCtx.token}`,
-        }, body: {
-            title_uz,
-            title_ru,
-            title_eng,
-            description_uz,
-            description_ru,
-            description_eng,
-            type,
-            typeId
-        }, onSuccess: (data) => {
-            console.log(data)
+        }, body: instructuinsData, onSuccess: (data) => {
             getInstructions.doRequest();
             setCreateUser(false);
             setUpdateUser(false);
@@ -96,18 +370,9 @@ const Instructions = () => {
     });
 
     const updateInstructionsRequest = useRequest({
-        url: `/Instructions`, method: "put", headers: {
+        url: `/instruction`, method: "put", headers: {
             Authorization: `Bearer ${authCtx.token}`,
-        }, body: {
-            title_uz,
-            title_ru,
-            title_eng,
-            description_uz,
-            description_ru,
-            description_eng,
-            type,
-            typeId
-        }, onSuccess: (data) => {
+        }, body: instructuinsData, onSuccess: (data) => {
             getInstructions.doRequest();
             setCreateUser(false);
             setUpdateUser(false);
@@ -125,7 +390,9 @@ const Instructions = () => {
                 setDescriptionUz(type.description_uz);
                 setDescriptionEng(type.description_eng);
                 setDescriptionRu(type.description_ru);
-                setTypeOfInstructionsId(type.typeOfProductId);
+                setLink(type.link);
+                setTypeId(type.typeId);
+                setType(type.type)
             }
         });
         setUpdateUser(true);
@@ -133,7 +400,7 @@ const Instructions = () => {
     };
 
     const deleteInstructionsRequestRequest = useRequest({
-        url: `/Instructions`, method: "delete", headers: {
+        url: `/instruction`, method: "delete", headers: {
             Authorization: `Bearer ${authCtx.token}`,
         }, body: {}, onSuccess: (data) => {
             getInstructions.doRequest();
@@ -151,6 +418,18 @@ const Instructions = () => {
 
     const onSubmitInstructionsData = async (e) => {
         e.preventDefault();
+
+        instructuinsData.append("title_uz", title_uz);
+        instructuinsData.append("title_ru", title_ru);
+        instructuinsData.append("title_eng", title_eng);
+        instructuinsData.append("description_uz", description_uz);
+        instructuinsData.append("description_ru", description_ru);
+        instructuinsData.append("description_eng", description_eng);
+        instructuinsData.append("type", type);
+        instructuinsData.append("typeId", typeId);
+        instructuinsData.append("photo", photo);
+        instructuinsData.append("link", link);
+
 
         if (!updateUser) {
             await addInstructions.doRequest();
@@ -196,23 +475,8 @@ const Instructions = () => {
                     </div>
                 </div>
                 {!createUser ? (<>
-                    <div className="sorting-container">
-                        <FormControl sx={{m: 1, minWidth: 120}}>
-                            <Select
-                                value={confirmedType}
-                                onChange={handleChangeType}
-                                displayEmpty
-                                inputProps={{"aria-label": "Without label"}}
-                            >
-                                <MenuItem value={"all"}>All</MenuItem>
-                                {typesOfInstructions.map(type => (
-                                    <MenuItem key={type.id} value={type.id}>{type.title}</MenuItem>
-                                ))}
-                            </Select>
-                        </FormControl>
-                    </div>
                     <Table
-                        headers={["Title Uz", "Title Eng", "Title Ru", "Description Uz", "Description Eng", "Description Ru", "Address Uz", "Address Eng", "Address Ru", "Price", "Phone", "See On Map", "Edit", "Delete"]}
+                        headers={["Title Uz", "Title Eng", "Title Ru", "Description Uz", "Description Eng", "Description Ru", "link", "youtube cover", "Edit", "Delete"]}
                     >
                         {Instructions.map((n) => (<TableRow
                             key={n.id}
@@ -241,28 +505,15 @@ const Instructions = () => {
                                 {n.description_ru}
                             </TableCell>
                             <TableCell align="left">
-                                {n.address_uz}
+                                {n.link}
                             </TableCell>
                             <TableCell align="left">
-                                {n.address_eng}
-                            </TableCell>
-                            <TableCell align="left">
-                                {n.address_ru}
-                            </TableCell>
-                            <TableCell align="left">
-                                {n.phone}
-                            </TableCell>
-                            <TableCell align="left">
-                                {n.price}
-                            </TableCell>
-                            <TableCell align="left">
-                                <a
-                                    href={`
-                      https://yandex.com/maps/?ll=${n.long},${n.lat}&z=14&text=${n.lat},${n.long}`}
-                                    target="_blank"
-                                >
-                                    <PreviewIcon/>
-                                </a>
+                                <img
+                                    crossOrigin="anonymous"
+                                    alt={"image"}
+                                    src={`https://user-stat.uz/${n.photo}`}
+                                    style={{width: "100px"}}
+                                />
                             </TableCell>
                             <TableCell
                                 align="left"
@@ -346,6 +597,22 @@ const Instructions = () => {
                                 style={{height: "100px"}}
                             />
                         </div>
+                        <div className="detail">
+                            <label>Link</label>
+                            <input
+                                value={link}
+                                onChange={(e) => setLink(e.target.value)}
+                                required={true}
+                            />
+                        </div>
+                        <div className="detail">
+                            <label>You Tube Cover</label>
+                            <input
+                                type={"file"}
+                                // value={}
+                                onChange={(e) => setPhoto(e.target.files[0])}
+                            />
+                        </div>
                         <div className={"detail"}>
                             <label>Select Type</label>
                             <div className="sorting-container">
@@ -356,8 +623,9 @@ const Instructions = () => {
                                         displayEmpty
                                         inputProps={{"aria-label": "Without label"}}
                                     >
-                                        {typesOfInstructions.map(type => (
-                                            <MenuItem value={type.id} key={type.id}>{type.title}</MenuItem>))}
+                                        {models.map(model => (
+                                            <MenuItem value={model.id} key={model.id}>{model.name}</MenuItem>
+                                        ))}
                                     </Select>
                                 </FormControl>
                             </div>
