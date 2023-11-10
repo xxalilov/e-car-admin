@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState, useRef} from "react";
-import mapboxgl from "mapbox-gl";
+import mapboxgl from 'mapbox-gl'
 import {LoadingButton} from "@mui/lab";
 import {
     FormControl, FormControlLabel, FormLabel, MenuItem, Radio, RadioGroup, Select, TableCell, TableRow

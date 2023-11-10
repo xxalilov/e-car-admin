@@ -108,8 +108,8 @@ const TypeOfProduct = () => {
         {addTypesOfProducts.loading ? <Loading/> : null}
         {deleteTypesOfProducts.loading ? <Loading/> : null}
         {addTypesOfProducts.errors ? <Notification message={addTypesOfProducts.errors} status={"error"} />: null}
+        {onSuccessMsg ? <Notification message={onSuccessMsg} status={"success"} />: null}
         <div className="profile-container">
-            {onSuccessMsg}
             <div className="right-section">
                 <div className="right-section-header">
                     <div

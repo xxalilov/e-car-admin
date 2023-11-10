@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState, useRef} from "react";
-import mapboxgl from "mapbox-gl";
+import mapboxgl from 'mapbox-gl'
 import {LoadingButton} from "@mui/lab";
 import {
     FormControl, FormControlLabel, FormLabel, MenuItem, Radio, RadioGroup, Select, TableCell, TableRow
@@ -13,6 +13,7 @@ import Notification from "../../components/Notifications/Notification";
 import Loading from "../../components/Loading/Loading";
 import BorderColorOutlinedIcon from "@mui/icons-material/BorderColorOutlined";
 import Pagination from "../../components/Pagination/Pagination";
+import Switch from '@mui/material/Switch';
 import "./products.css";
 
 mapboxgl.accessToken = "pk.eyJ1IjoieG9sYmVrIiwiYSI6ImNsbzVpZmIxeTBiNGoyaW8zczYyaGc3dDEifQ.denGEsWgU0BqOq2xKuQvcQ";
@@ -44,9 +45,12 @@ const Products = () => {
     const [products, setProducts] = useState([]);
     const [typesOfProducts, setTypesOfProducts] = useState([]);
     const [id, setId] = useState(null);
+    const [images, setImages] = useState([]);
 
     const [onSuccessMsg, setOnSuccessMsg] = useState(null);
     const authCtx = useContext(AuthContext);
+    
+    const productData = new FormData();
 
     const handleChangeSorting = (event) => {
         setConfirmedValue(event.target.value);
@@ -67,7 +71,6 @@ const Products = () => {
         if (map.current) {
             map.current.on('click', (e) => {
                 const {lng, lat} = e.lngLat
-                console.log(longitude, latitude);
                 const marker = new mapboxgl.Marker().setLngLat([longitude, latitude]).addTo(map.current);
                 marker.remove();
                 new mapboxgl.Marker().setLngLat([lng, lat]).addTo(map.current);
@@ -112,23 +115,8 @@ const Products = () => {
     const addProducts = useRequest({
         url: `/products`, method: "post", headers: {
             Authorization: `Bearer ${authCtx.token}`,
-        }, body: {
-            title_uz,
-            title_ru,
-            title_eng,
-            description_uz,
-            description_ru,
-            description_eng,
-            price,
-            phone,
-            address_uz,
-            address_ru,
-            address_eng,
-            typeOfProductId:typeOfProductsId,
-            lat: latitude,
-            long: longitude,
-        }, onSuccess: (data) => {
-            console.log(data)
+        }, body: productData
+        , onSuccess: (data) => {
             getproducts.doRequest();
             setCreateUser(false);
             setUpdateUser(false);
@@ -139,22 +127,8 @@ const Products = () => {
     const updateProductsRequest = useRequest({
         url: `/products`, method: "put", headers: {
             Authorization: `Bearer ${authCtx.token}`,
-        }, body: {
-            title_uz,
-            title_ru,
-            title_eng,
-            description_uz,
-            description_ru,
-            description_eng,
-            price,
-            phone,
-            address_uz,
-            address_ru,
-            address_eng,
-            typeOfProductId: typeOfProductsId,
-            lat: String(latitude),
-            long: String(longitude),
-        }, onSuccess: (data) => {
+        }, body: productData
+        , onSuccess: (data) => {
             getproducts.doRequest();
             setCreateUser(false);
             setUpdateUser(false);
@@ -186,6 +160,15 @@ const Products = () => {
         setCreateUser(true);
     };
 
+    const updateIsTop = useRequest({
+        url: `/products`, method: "put", headers: {
+            Authorization: `Bearer ${authCtx.token}`,
+        }, body: {}, onSuccess: (data) => {
+            getproducts.doRequest();
+            setOnSuccessMsg("Products top qilindi.");
+        }
+    })
+
     const deleteProductsRequestRequest = useRequest({
         url: `/products`, method: "delete", headers: {
             Authorization: `Bearer ${authCtx.token}`,
@@ -205,6 +188,20 @@ const Products = () => {
 
     const onSubmitProductsData = async (e) => {
         e.preventDefault();
+        productData.append("title_uz", title_uz);
+        productData.append("title_ru", title_ru);
+        productData.append("title_eng", title_eng);
+        productData.append("description_uz", description_uz);
+        productData.append("description_ru", description_ru);
+        productData.append("description_eng", description_eng);
+        productData.append("address_uz", address_uz);
+        productData.append("address_ru", address_ru);
+        productData.append("address_eng", address_eng);
+        productData.append("phone", phone);
+        productData.append("price", price);
+        productData.append("typeOfProductId", typeOfProductsId);
+        productData.append("lat", String(latitude));
+        productData.append("long", String(longitude));
 
         if (!updateUser) {
             await addProducts.doRequest();
@@ -218,9 +215,25 @@ const Products = () => {
         setCurrentPage(page);
     };
 
+
+    const handleImageChange = (e) => {
+        const files = e.target.files;
+        for (let i = 0; i < files.length; i++) {
+            productData.append(`photo`, files[i]);
+        }
+        // console.log(e.target.files)
+        // setImages(e.target.files);
+    };
+
+    const handleIsTop = async (id, isTop) => {
+        setOnSuccessMsg(null);
+        await updateIsTop.doRequest(id, {isTop: isTop ? "false" : "true"});
+    }
+
     return (<React.Fragment>
         {getproducts.loading ? <Loading/> : null}
         {addProducts.loading ? <Loading/> : null}
+        {updateIsTop.loading ? <Loading/> : null}
         {deleteProductsRequest.loading ? <Loading/> : null}
         {addProducts.errors ? <Notification message={addProducts.errors} status={"error"}/> : null}
         {onSuccessMsg ? <Notification message={onSuccessMsg} status={"success"}/> : null}
@@ -266,7 +279,7 @@ const Products = () => {
                         </FormControl>
                     </div>
                     <Table
-                        headers={["Title Uz", "Title Eng", "Title Ru", "Description Uz", "Description Eng", "Description Ru", "Address Uz", "Address Eng", "Address Ru", "Price", "Phone", "See On Map", "Edit", "Delete"]}
+                        headers={["Title Uz", "Title Eng", "Title Ru", "Description Uz", "Description Eng", "Description Ru", "Address Uz", "Address Eng", "Address Ru", "Price", "Phone", "Images", "Top" , "See On Map", "Edit", "Delete"]}
                     >
                         {products.map((n) => (<TableRow
                             key={n.id}
@@ -304,10 +317,27 @@ const Products = () => {
                                 {n.address_ru}
                             </TableCell>
                             <TableCell align="left">
+                                {n.price}
+                            </TableCell>
+                            <TableCell align="left">
                                 {n.phone}
                             </TableCell>
                             <TableCell align="left">
-                                {n.price}
+                                {n.photos && n.photos.map((photo) => (
+                                    <img
+                                        key={photo}
+                                        src={`https://user-stat.uz/${photo}`}
+                                        alt="product"
+                                        style={{width: "50px", height: "50px", marginLeft:"5px"}}
+                                    />
+                                ))}
+                            </TableCell>
+                            <TableCell align="left">
+                                <Switch
+                                    checked={n.isTop}
+                                    onChange={() => handleIsTop(n.id, n.isTop)}
+                                    inputProps={{ 'aria-label': 'controlled' }}
+                                />
                             </TableCell>
                             <TableCell align="left">
                                 <a
@@ -442,6 +472,15 @@ const Products = () => {
                                 type={"text"}
                                 value={address_eng}
                                 onChange={(e) => setAddressEng(e.target.value)}
+                                required={true}
+                            />
+                        </div>
+                        <div className="detail">
+                            <label>Images</label>
+                            <input
+                                type={"file"}
+                                multiple
+                                onChange={handleImageChange}
                                 required={true}
                             />
                         </div>

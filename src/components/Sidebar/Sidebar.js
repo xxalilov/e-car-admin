@@ -102,6 +102,18 @@ const Sidebar = (props) => {
                         </li>
 
 
+                        <li>
+                            <NavLink
+                                className={({isActive}) =>
+                                    isActive ? "link active" : "link"
+                                }
+                                to={"/shipping"}
+                                onClick={onCloseSideBar}
+                            >
+                                Shipping Types
+                            </NavLink>
+                        </li>
+
                         {props.role === "superadmin" && (
                             <li>
                                 <NavLink
