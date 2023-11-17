@@ -18,6 +18,9 @@ import Stations from "../Stations/Stations";
 import Products from "../Products/Products";
 import Instruction from "../Instructions/Instruction";
 import Shipping from "../Shipping/Shipping";
+import Offer from "../Offer/Offer";
+import Admin from "../Admins/Admin";
+import Order from "../Orders/Order";
 
 const Main = () => {
   const [role, setRole] = useState(null);
@@ -43,17 +46,20 @@ const Main = () => {
       <Layout role={role}>
         <Routes>
           {role === "superadmin" && <Route path="/users" element={<User />} />}
+          {role === "superadmin" && <Route path="/admins" element={<Admin />} />}
           <Route path="/type-of-products" element={<TypeOfProduct />} />
+          <Route path="/orders" element={<Order />} />
           <Route path="/type-of-workshops" element={<TypeOfWorkshop />} />
           <Route path="/workshops" element={<Workshop />} />
           <Route path="/shipping" element={<Shipping />} />
+          <Route path="/offers" element={<Offer />} />
           <Route path="/news" element={<News />} />
           <Route path="/advertisings" element={<Advertising />} />
           <Route path="/stations" element={<Stations />} />
           <Route path="/instructions" element={<Instruction />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/products" element={<Products />} />
-          <Route path="*" element={<Navigate to="/type-of-products" />} />
+          <Route path="*" element={<Navigate to="/orders" />} />
         </Routes>
       </Layout>
     </React.Fragment>

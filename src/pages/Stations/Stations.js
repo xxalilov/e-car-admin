@@ -2,7 +2,7 @@ import React, {useContext, useEffect, useState, useRef} from "react";
 import mapboxgl from 'mapbox-gl'
 import {LoadingButton} from "@mui/lab";
 import {
-    FormControl, FormControlLabel, FormLabel, MenuItem, Radio, RadioGroup, Select, TableCell, TableRow
+    TableCell, TableRow
 } from "@mui/material";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import PreviewIcon from "@mui/icons-material/Preview";

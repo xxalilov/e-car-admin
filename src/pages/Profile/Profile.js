@@ -11,7 +11,6 @@ const Profile = () => {
   const [editPassword, setEditPassword] = useState(false);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [province, setProvince] = useState("");
   const [id, setId] = useState("");
   const [role, setRole] = useState();
   const [currentPassword, setCurrentPassword] = useState("");
@@ -35,7 +34,6 @@ const Profile = () => {
     onSuccess: (data) => {
       setName(data.data.fullname);
       setEmail(data.data.email);
-      setProvince(data.data.province);
       setId(data.data.id);
       setRole(data.data.role);
     },
@@ -145,18 +143,6 @@ const Profile = () => {
                     required
                   />
                 </div>
-                {role && role === "admin" ? (
-                  <div className="detail">
-                    <label>Province</label>
-                    <input
-                      type={"text"}
-                      value={province}
-                      disabled
-                      onChange={(e) => setProvince(e.target.value)}
-                      required
-                    />
-                  </div>
-                ) : null}
                 <div style={{ margin: "20px 0" }}>
                   <LoadingButton
                     loading={updateUserDetails.loading}

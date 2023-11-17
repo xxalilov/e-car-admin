@@ -511,7 +511,7 @@ const Instructions = () => {
                                 <img
                                     crossOrigin="anonymous"
                                     alt={"image"}
-                                    src={`https://user-stat.uz/${n.photo}`}
+                                    src={`https://user-stat.uz/${n.youtubeCover}`}
                                     style={{width: "100px"}}
                                 />
                             </TableCell>

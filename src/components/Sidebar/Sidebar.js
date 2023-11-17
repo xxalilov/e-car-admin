@@ -28,6 +28,17 @@ const Sidebar = (props) => {
                                 className={({isActive}) =>
                                     isActive ? "link active" : "link"
                                 }
+                                to={"/orders"}
+                                onClick={onCloseSideBar}
+                            >
+                                Orders
+                            </NavLink>
+                        </li>
+                        <li>
+                            <NavLink
+                                className={({isActive}) =>
+                                    isActive ? "link active" : "link"
+                                }
                                 to={"/type-of-products"}
                                 onClick={onCloseSideBar}
                             >
@@ -114,6 +125,18 @@ const Sidebar = (props) => {
                             </NavLink>
                         </li>
 
+                        <li>
+                            <NavLink
+                                className={({isActive}) =>
+                                    isActive ? "link active" : "link"
+                                }
+                                to={"/offers"}
+                                onClick={onCloseSideBar}
+                            >
+                                Offers
+                            </NavLink>
+                        </li>
+
                         {props.role === "superadmin" && (
                             <li>
                                 <NavLink
@@ -137,6 +160,19 @@ const Sidebar = (props) => {
                                     onClick={onCloseSideBar}
                                 >
                                     Users List
+                                </NavLink>
+                            </li>
+                        )}
+                        {props.role === "superadmin" && (
+                            <li>
+                                <NavLink
+                                    className={({isActive}) =>
+                                        isActive ? "link active" : "link"
+                                    }
+                                    to={"/admins"}
+                                    onClick={onCloseSideBar}
+                                >
+                                    Admins
                                 </NavLink>
                             </li>
                         )}

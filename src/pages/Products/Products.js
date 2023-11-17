@@ -39,7 +39,7 @@ const Products = () => {
     const [address_uz, setAddressUz] = useState("");
     const [address_ru, setAddressRu] = useState("");
     const [address_eng, setAddressEng] = useState("");
-    const [typeOfProductsId, setTypeOfProductsId] = useState("");
+    const [typeOfProductsId, setTypeOfProductsId] = useState(null);
     const [latitude, setLatitude] = useState("");
     const [longitude, setLongitude] = useState("");
     const [products, setProducts] = useState([]);
@@ -112,6 +112,25 @@ const Products = () => {
         return () => map.remove();
     }
 
+    const clearFields = () => {
+        setTitleUz("");
+        setTitleRu("");
+        setTitleEng("");
+        setDescriptionUz("");
+        setDescriptionRu("");
+        setDescriptionEng("");
+        setAddressUz("");
+        setAddressEng("");
+        setAddressRu("");
+        setImages([]);
+        setConfirmedValue("");
+        setPhone("");
+        setPrice("");
+        setTypeOfProductsId(null);
+        setLatitude("");
+        setLongitude("");
+    }
+
     const addProducts = useRequest({
         url: `/products`, method: "post", headers: {
             Authorization: `Bearer ${authCtx.token}`,
@@ -121,6 +140,7 @@ const Products = () => {
             setCreateUser(false);
             setUpdateUser(false);
             setOnSuccessMsg("Products yaratildi.");
+            clearFields();
         }
     });
 
@@ -133,6 +153,7 @@ const Products = () => {
             setCreateUser(false);
             setUpdateUser(false);
             setOnSuccessMsg("Products yangilandi.");
+            clearFields();
         }
     })
 
@@ -151,7 +172,8 @@ const Products = () => {
                 setAddressRu(type.address_ru);
                 setPrice(type.price);
                 setPhone(type.phone);
-                setTypeOfProductsId(type.typeOfProductId);
+                setConfirmedValue(type.typeOfProductId);
+                setTypeOfProductsId(type.typeOfProductId)
                 setLatitude(type.lat);
                 setLongitude(type.long);
             }
@@ -199,9 +221,12 @@ const Products = () => {
         productData.append("address_eng", address_eng);
         productData.append("phone", phone);
         productData.append("price", price);
-        productData.append("typeOfProductId", typeOfProductsId);
+        if(typeOfProductsId) productData.append("typeOfProductId", typeOfProductsId);
         productData.append("lat", String(latitude));
         productData.append("long", String(longitude));
+        for (let i = 0; i < images.length; i++) {
+            productData.append(`photo`, images[i]);
+        }
 
         if (!updateUser) {
             await addProducts.doRequest();
@@ -218,11 +243,7 @@ const Products = () => {
 
     const handleImageChange = (e) => {
         const files = e.target.files;
-        for (let i = 0; i < files.length; i++) {
-            productData.append(`photo`, files[i]);
-        }
-        // console.log(e.target.files)
-        // setImages(e.target.files);
+        setImages(files);
     };
 
     const handleIsTop = async (id, isTop) => {
@@ -250,7 +271,7 @@ const Products = () => {
                                 getproducts.doRequest();
                             }}
                         >
-                            products List
+                            Products List
                         </button>
                     </div>
                     <div
@@ -327,6 +348,7 @@ const Products = () => {
                                     <img
                                         key={photo}
                                         src={`https://user-stat.uz/${photo}`}
+                                        // src={`http://localhost:3000/${photo}`}
                                         alt="product"
                                         style={{width: "50px", height: "50px", marginLeft:"5px"}}
                                     />
@@ -481,7 +503,6 @@ const Products = () => {
                                 type={"file"}
                                 multiple
                                 onChange={handleImageChange}
-                                required={true}
                             />
                         </div>
                         <div className={"detail"}>

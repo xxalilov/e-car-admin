@@ -44,49 +44,6 @@ const Header = (props) => {
         </button>
       </div>
       <div className="right-section">
-        <div className="lan">
-          <BasicMenu
-            header={<LanguageIcon />}
-            bottom={[
-              <button
-                style={{ background: "transparent", border: "none" }}
-                onClick={() => changeLanguage("uz")}
-              >
-                O'z
-              </button>,
-              <button
-                style={{ background: "transparent", border: "none" }}
-                onClick={() => changeLanguage("uzKrill")}
-              >
-                Ўз
-              </button>,
-              <button
-                style={{ background: "transparent", border: "none" }}
-                onClick={() => changeLanguage("kk")}
-              >
-                Qar
-              </button>,
-              <button
-                style={{ background: "transparent", border: "none" }}
-                onClick={() => changeLanguage("kkKrill")}
-              >
-                Қар
-              </button>,
-              <button
-                style={{ background: "transparent", border: "none" }}
-                onClick={() => changeLanguage("eng")}
-              >
-                Eng
-              </button>,
-              <button
-                style={{ background: "transparent", border: "none" }}
-                onClick={() => changeLanguage("ru")}
-              >
-                Ру
-              </button>,
-            ]}
-          />
-        </div>
 
         <div className="profile">
           <BasicMenu
