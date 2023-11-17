@@ -269,7 +269,7 @@ const Order = () => {
                                 {n.is_paid ? "To'langan" : "To'lanmagan"}
                             </TableCell>
                             <TableCell component="th" scope="row">
-                                <Button variant="contained" disabled={n.isPaid ? false : true} onClick={() => payOrderRequest.doRequest(n.id)}>Pay</Button>
+                                <Button variant="contained" disabled={n.is_paid} onClick={() => payOrderRequest.doRequest(n.id)}>Pay</Button>
                             </TableCell>
                             <TableCell component="th" scope="row">
                                 <Button variant="contained" disabled={n.shipping_status} onClick={() => shipOrderRequest.doRequest(n.id)}>Ship</Button>
