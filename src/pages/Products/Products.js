@@ -1,5 +1,6 @@
 import React, {useContext, useEffect, useState, useRef} from "react";
-import mapboxgl from 'mapbox-gl'
+import 'mapbox-gl/dist/mapbox-gl.css';
+import ReactMapGl, { Marker } from 'react-map-gl';
 import {LoadingButton} from "@mui/lab";
 import {
     FormControl, FormControlLabel, FormLabel, MenuItem, Radio, RadioGroup, Select, TableCell, TableRow
@@ -16,7 +17,7 @@ import Pagination from "../../components/Pagination/Pagination";
 import Switch from '@mui/material/Switch';
 import "./products.css";
 
-mapboxgl.accessToken = "pk.eyJ1IjoieG9sYmVrIiwiYSI6ImNsbzVpZmIxeTBiNGoyaW8zczYyaGc3dDEifQ.denGEsWgU0BqOq2xKuQvcQ";
+const TOKEN = "pk.eyJ1IjoieG9sYmVrIiwiYSI6ImNsbzVpZmIxeTBiNGoyaW8zczYyaGc3dDEifQ.denGEsWgU0BqOq2xKuQvcQ";
 
 const Products = () => {
     const [currentPage, setCurrentPage] = useState(1);
@@ -46,6 +47,12 @@ const Products = () => {
     const [typesOfProducts, setTypesOfProducts] = useState([]);
     const [id, setId] = useState(null);
     const [images, setImages] = useState([]);
+    const [viewPort, setViewPort] = useState({
+        latitude: 41.307349,
+        longitude: 69.251827,
+        zoom: 12,
+    });
+    const [newPlace, setNewPlace] = useState(null)
 
     const [onSuccessMsg, setOnSuccessMsg] = useState(null);
     const authCtx = useContext(AuthContext);
@@ -66,19 +73,19 @@ const Products = () => {
         getTypesOfProducts.doRequest();
         // getMap();
     }, [confirmedValue, currentPage, confirmedType]);
-    useEffect(() => {
-        if (createUser) getMap();
-        if (map.current) {
-            map.current.on('click', (e) => {
-                const {lng, lat} = e.lngLat
-                const marker = new mapboxgl.Marker().setLngLat([longitude, latitude]).addTo(map.current);
-                marker.remove();
-                new mapboxgl.Marker().setLngLat([lng, lat]).addTo(map.current);
-                setLongitude(String(lng));
-                setLatitude(String(lat));
-            })
-        }
-    }, [createUser])
+    // useEffect(() => {
+    //     if (createUser) getMap();
+    //     if (map.current) {
+    //         map.current.on('click', (e) => {
+    //             const {lng, lat} = e.lngLat
+    //             const marker = new mapboxgl.Marker().setLngLat([longitude, latitude]).addTo(map.current);
+    //             marker.remove();
+    //             new mapboxgl.Marker().setLngLat([lng, lat]).addTo(map.current);
+    //             setLongitude(String(lng));
+    //             setLatitude(String(lat));
+    //         })
+    //     }
+    // }, [createUser])
     const getproducts = useRequest({
         url: `/products?lang=all${confirmedType !== "all" ? `&type=${confirmedType}`: ""}&pageSize=10&page=${currentPage}`,
         method: "get",
@@ -101,16 +108,16 @@ const Products = () => {
         }
     })
 
-    const getMap = () => {
-        map.current = new mapboxgl.Map({
-            container: mapContainer.current, // container ID
-            style: 'mapbox://styles/mapbox/streets-v11', // style URL
-            center: [69.251827, 41.307349], // starting position [lng, lat]
-            zoom: 12, // starting zoom
-        });
-
-        return () => map.remove();
-    }
+    // const getMap = () => {
+    //     map.current = new mapboxgl.Map({
+    //         container: mapContainer.current, // container ID
+    //         style: 'mapbox://styles/mapbox/streets-v11', // style URL
+    //         center: [69.251827, 41.307349], // starting position [lng, lat]
+    //         zoom: 12, // starting zoom
+    //     });
+    //
+    //     return () => map.remove();
+    // }
 
     const clearFields = () => {
         setTitleUz("");
@@ -176,6 +183,10 @@ const Products = () => {
                 setTypeOfProductsId(type.typeOfProductId)
                 setLatitude(type.lat);
                 setLongitude(type.long);
+                setNewPlace({
+                    lat: type.lat,
+                    long: type.long
+                })
             }
         });
         setUpdateUser(true);
@@ -249,6 +260,15 @@ const Products = () => {
     const handleIsTop = async (id, isTop) => {
         setOnSuccessMsg(null);
         await updateIsTop.doRequest(id, {isTop: isTop ? "false" : "true"});
+    }
+
+    const handleClick = (e) => {
+        setLatitude(e.lngLat.lat);
+        setLongitude(e.lngLat.lng)
+        setNewPlace({
+            lat: e.lngLat.lat,
+            long: e.lngLat.lng
+        })
     }
 
     return (<React.Fragment>
@@ -521,8 +541,30 @@ const Products = () => {
                                 </FormControl>
                             </div>
                         </div>
-                        <div className={"detail"}>
-                            <div ref={mapContainer} className={"style1"}/>
+                        <div className={"detail"} className={"style1"}>
+                            <ReactMapGl
+                                {...viewPort}
+                                mapboxAccessToken={TOKEN}
+                                width={"100%"}
+                                height={"100%"}
+                                transitionDuration={'200'}
+                                mapStyle={'mapbox://styles/xolbek/clp6j2q7r00hl01pc8kna024o'}
+                                onMove={evt => setViewPort(evt.viewState)}
+                                onDblClick={handleClick}
+                            >
+                                {newPlace ? (
+                                    <>
+                                        <Marker latitude={newPlace.lat} longitude={newPlace.long} offsetLeft={-3.5*viewPort.zoom} offsetTop={-7*viewPort.zoom}>
+                                            {/*<Room style={{*/}
+                                            {/*    fontSize: 7*viewPort.zoom,*/}
+                                            {/*    color: 'tomato',*/}
+                                            {/*    cursor: 'pointer'*/}
+                                            {/*}} />*/}
+                                        </Marker>
+                                    </>
+                                ) : null}
+                            </ReactMapGl>
+                            {/*<div ref={mapContainer} className={"style1"}/>*/}
                         </div>
                         <div className={"detail"}>
                             <label>

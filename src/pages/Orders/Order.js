@@ -49,6 +49,7 @@ const Order = () => {
     const handleClose = () => setOpen(false);
 
     const handleChangeType = (event) => {
+        setCurrentPage(1)
         setConfirmedType(event.target.value);
     };
 
@@ -57,7 +58,7 @@ const Order = () => {
         getOrder.doRequest();
     }, [currentPage, confirmedType]);
     const getOrder = useRequest({
-        url: `/order/admin?type=${confirmedType}`, method: "get", headers: {
+        url: `/order/admin?pageSize=10&page=${currentPage}&type=${confirmedType}`, method: "get", headers: {
             Authorization: `Bearer ${authCtx.token}`,
         }, onSuccess: (data) => {
             setOrder(data.data);

@@ -1,6 +1,8 @@
 .style1 {
     width: 100%;
     height: 400px;
+    margin-top: 20px;
+    z-index: -1
 }
 
 .style2 {
