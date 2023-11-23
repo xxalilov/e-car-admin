@@ -21,7 +21,7 @@ const Offer = () => {
     }, [currentPage]);
 
     const getOffer = useRequest({
-        url: `/offers?pageSize=10&page=${currentPage}`,
+        url: `/offers?pageSize=20&page=${currentPage}`,
         method: "get",
         headers: {
             Authorization: `Bearer ${authCtx.token}`,
@@ -49,6 +49,9 @@ const Offer = () => {
                                 headers={[
                                     "text",
                                     "userId",
+                                    "firstname",
+                                    "lastname",
+                                    "phone"
                                 ]}
                             >
                                 {offers.map((n) => (
@@ -65,6 +68,15 @@ const Offer = () => {
                                         </TableCell>
                                         <TableCell component="th" scope="row">
                                             {n.userId}
+                                        </TableCell>
+                                        <TableCell component="th" scope="row">
+                                            {n.user.firstname}
+                                        </TableCell>
+                                        <TableCell component="th" scope="row">
+                                            {n.user.lastname}
+                                        </TableCell>
+                                        <TableCell component="th" scope="row">
+                                            {n.user.phone}
                                         </TableCell>
                                     </TableRow>
                                 ))}

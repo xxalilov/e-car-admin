@@ -21,8 +21,6 @@ const Stations = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [count, setCount] = useState(0);
     const [allPages, setAllPages] = useState(0);
-    const mapContainer = useRef(null);
-    const map = useRef(null);
     const [createUser, setCreateUser] = useState(false);
     const [updateUser, setUpdateUser] = useState(false);
     const [confirmedValue, setConfirmedValue] = useState("");
@@ -67,8 +65,8 @@ const Stations = () => {
             title_uz: titleUz,
             title_ru: titleRu,
             title_eng: titleEng,
-            lat: latitude,
-            long: longitude,
+            lat: String(latitude),
+            long: String(longitude),
         }, onSuccess: (data) => {
             getStations.doRequest();
             setCreateUser(false);

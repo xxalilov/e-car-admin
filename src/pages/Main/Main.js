@@ -51,7 +51,7 @@ const Main = () => {
           <Route path="/orders" element={<Order />} />
           <Route path="/type-of-workshops" element={<TypeOfWorkshop />} />
           <Route path="/workshops" element={<Workshop />} />
-          <Route path="/shipping" element={<Shipping />} />
+          {role === "superadmin" && <Route path="/shipping" element={<Shipping />} />}
           <Route path="/offers" element={<Offer />} />
           <Route path="/news" element={<News />} />
           <Route path="/advertisings" element={<Advertising />} />

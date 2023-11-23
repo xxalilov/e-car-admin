@@ -1,5 +1,6 @@
 import React, {useContext, useEffect, useState, useRef} from "react";
-import mapboxgl from "mapbox-gl";
+import 'mapbox-gl/dist/mapbox-gl.css';
+import ReactMapGl, { Marker } from 'react-map-gl';
 import {LoadingButton} from "@mui/lab";
 import {
     FormControl, FormControlLabel, FormLabel, MenuItem, Radio, RadioGroup, Select, TableCell, TableRow
@@ -15,7 +16,7 @@ import BorderColorOutlinedIcon from "@mui/icons-material/BorderColorOutlined";
 import Pagination from "../../components/Pagination/Pagination";
 import "./workshop.css";
 
-mapboxgl.accessToken = "pk.eyJ1IjoieG9sYmVrIiwiYSI6ImNsbzVpZmIxeTBiNGoyaW8zczYyaGc3dDEifQ.denGEsWgU0BqOq2xKuQvcQ";
+const TOKEN = "pk.eyJ1IjoieG9sYmVrIiwiYSI6ImNsbzVpZmIxeTBiNGoyaW8zczYyaGc3dDEifQ.denGEsWgU0BqOq2xKuQvcQ";
 
 const Workshop = () => {
     const [currentPage, setCurrentPage] = useState(1);
@@ -44,6 +45,12 @@ const Workshop = () => {
     const [workshops, setWorkshops] = useState([]);
     const [typesOfWorkshops, setTypesOfWorkshops] = useState([]);
     const [id, setId] = useState(null);
+    const [viewPort, setViewPort] = useState({
+        latitude: 41.307349,
+        longitude: 69.251827,
+        zoom: 12,
+    });
+    const [newPlace, setNewPlace] = useState(null)
 
     const [onSuccessMsg, setOnSuccessMsg] = useState(null);
     const authCtx = useContext(AuthContext);
@@ -60,22 +67,7 @@ const Workshop = () => {
     useEffect(() => {
         getWorkshops.doRequest();
         getTypesOfWorkshops.doRequest();
-        // getMap();
     }, [confirmedValue, currentPage, confirmedType]);
-    useEffect(() => {
-        if (createUser) getMap();
-        if (map.current) {
-            map.current.on('click', (e) => {
-                const {lng, lat} = e.lngLat
-                console.log(longitude, latitude);
-                const marker = new mapboxgl.Marker().setLngLat([longitude, latitude]).addTo(map.current);
-                marker.remove();
-                new mapboxgl.Marker().setLngLat([lng, lat]).addTo(map.current);
-                setLongitude(String(lng));
-                setLatitude(String(lat));
-            })
-        }
-    }, [createUser])
     const getWorkshops = useRequest({
         url: `/workshop${confirmedType !== "all" ? `/${confirmedType}` : ""}?lang=all&pageSize=10&page=${currentPage}`,
         method: "get",
@@ -98,17 +90,6 @@ const Workshop = () => {
         }
     })
 
-    const getMap = () => {
-        map.current = new mapboxgl.Map({
-            container: mapContainer.current, // container ID
-            style: 'mapbox://styles/mapbox/streets-v11', // style URL
-            center: [69.251827, 41.307349], // starting position [lng, lat]
-            zoom: 12, // starting zoom
-        });
-
-        return () => map.remove();
-    }
-
     const addWorkshops = useRequest({
         url: `/workshop`, method: "post", headers: {
             Authorization: `Bearer ${authCtx.token}`,
@@ -125,10 +106,9 @@ const Workshop = () => {
             address_ru,
             address_eng,
             typeOfWorkshopId,
-            lat: latitude,
-            long: longitude,
+            lat: String(latitude),
+            long: String(longitude),
         }, onSuccess: (data) => {
-            console.log(data)
             getWorkshops.doRequest();
             setCreateUser(false);
             setUpdateUser(false);
@@ -180,6 +160,10 @@ const Workshop = () => {
                 setTypeOfWorkshopId(type.typeOfWorkshopId);
                 setLatitude(type.lat);
                 setLongitude(type.long);
+                setNewPlace({
+                    lat: type.lat,
+                    long: type.long
+                })
             }
         });
         setUpdateUser(true);
@@ -217,6 +201,15 @@ const Workshop = () => {
     const changeCurrentPage = (page) => {
         setCurrentPage(page);
     };
+
+    const handleClick = (e) => {
+        setLatitude(e.lngLat.lat);
+        setLongitude(e.lngLat.lng)
+        setNewPlace({
+            lat: e.lngLat.lat,
+            long: e.lngLat.lng
+        })
+    }
 
     return (<React.Fragment>
         {getWorkshops.loading ? <Loading/> : null}
@@ -461,8 +454,24 @@ const Workshop = () => {
                                 </FormControl>
                             </div>
                         </div>
-                        <div className={"detail"}>
-                            <div ref={mapContainer} className={"style1"}/>
+                        <div className={"detail"} className={"style1"}>
+                            <ReactMapGl
+                                {...viewPort}
+                                mapboxAccessToken={TOKEN}
+                                width={"100%"}
+                                height={"100%"}
+                                transitionDuration={'200'}
+                                mapStyle={'mapbox://styles/xolbek/clp6j2q7r00hl01pc8kna024o'}
+                                onMove={evt => setViewPort(evt.viewState)}
+                                onDblClick={handleClick}
+                            >
+                                {newPlace ? (
+                                    <>
+                                        <Marker latitude={newPlace.lat} longitude={newPlace.long} offsetLeft={-3.5*viewPort.zoom} offsetTop={-7*viewPort.zoom}>
+                                        </Marker>
+                                    </>
+                                ) : null}
+                            </ReactMapGl>
                         </div>
                         <div className={"detail"}>
                             <label>
